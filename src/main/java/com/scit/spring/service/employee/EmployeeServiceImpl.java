@@ -3,49 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scit.spring.service;
+package com.scit.spring.service.employee;
 
-import com.scit.spring.dao.EmployeeDao;
+import com.scit.spring.dao.GenericDAO;
+import com.scit.spring.dao.employee.EmployeeDao;
 import com.scit.spring.model.Employee;
-import java.util.List;
+import com.scit.spring.service.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  *
  * @author cuahutli
  */
-@Service("employeeService")
-@Transactional
-public class EmployeeServiceImpl implements EmployeeService {
+@Service
+public class EmployeeServiceImpl extends GenericServiceImpl<Employee, Integer> implements EmployeeService {
 
+    private EmployeeDao employeeDao;
+
+    public EmployeeServiceImpl() {
+    
+    }
+    
     @Autowired
-    private EmployeeDao dao;
+    public EmployeeServiceImpl(@Qualifier("employeeDaoImpl") GenericDAO<Employee, Integer> dao) {
+        super(dao);
+        this.employeeDao = (EmployeeDao) dao;
+    }
     
     @Override
-    public void saveEmployee(Employee employee) {
-        dao.saveEmployee(employee);
-    }
-
-    @Override
-    public List<Employee> findAllEmployees() {
-        return dao.findAllEmployees();
-    }
-
-    @Override
     public void deleteEmployeeBySsn(String ssn) {
-        dao.deleteEmployeeBySsn(ssn);
+        employeeDao.deleteEmployeeBySsn(ssn);
     }
 
     @Override
     public Employee findBySsn(String ssn) {
-        return dao.findBySsn(ssn);
+        return employeeDao.findBySsn(ssn);
     }
 
-    @Override
-    public void updateEmployee(Employee employee) {
-        dao.updateEmployee(employee);
-    }
     
 }

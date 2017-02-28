@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scit.spring.dao;
+package com.scit.spring.dao.employee;
 
-import java.util.List;
 
-import com.scit.spring.model.Employee;
+import com.scit.spring.dao.GenericDAOImpl;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
@@ -19,37 +18,22 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author cuahutli
  */
-@Repository("EmployeeDao")
-public class EmployeeDaoImpl extends AbstractDao implements EmployeeDao{
+@Repository
+public class EmployeeDaoImpl extends GenericDAOImpl<Employee, Integer> implements EmployeeDao{
 
-    @Override
-    public void saveEmployee(Employee employee) {
-        persist(employee);
-    }
-
-    @Override
-    public List<Employee> findAllEmployees() {
-        Criteria criteria = getSession().createCriteria(Employee.class);
-        return (List<Employee>) criteria.list();
-    }
 
     @Override
     public void deleteEmployeeBySsn(String ssn) {
-        Query query = getSession().createSQLQuery("delete from employee where ssn = :ssn");
+        Query query = getCurrentSession().createSQLQuery("delete from employee where ssn = :ssn");
         query.setString("ssn", ssn);
         query.executeUpdate();
     }
 
     @Override
     public Employee findBySsn(String ssn) {
-        Criteria criteria = getSession().createCriteria(Employee.class);
+        Criteria criteria = getCurrentSession().createCriteria(Employee.class);
         criteria.add(Restrictions.eq("ssn", ssn));
         return (Employee) criteria.uniqueResult();
-    }
-
-    @Override
-    public void updateEmployee(Employee employee) {
-        getSession().update(employee);
     }
     
 }

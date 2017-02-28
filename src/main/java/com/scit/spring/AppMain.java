@@ -7,7 +7,7 @@ package com.scit.spring;
 
 import com.scit.spring.configuration.AppConfig;
 import com.scit.spring.model.Employee;
-import com.scit.spring.service.EmployeeService;
+import com.scit.spring.service.employee.EmployeeService;
 import java.math.BigDecimal;
 import java.util.List;
 import org.joda.time.LocalDate;
@@ -21,8 +21,11 @@ import org.springframework.context.support.AbstractApplicationContext;
 public class AppMain {
     public static void main(String args[]){
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
- 
-        EmployeeService service = (EmployeeService) context.getBean("employeeService");
+        String names[] = context.getBeanDefinitionNames();
+        for (String name : names){
+            System.out.println(name);
+        }
+        EmployeeService service = (EmployeeService) context.getBean("employeeServiceImpl");
  
         /*
          * Create Employee1
@@ -45,13 +48,13 @@ public class AppMain {
         /*
          * Persist both Employees
          */
-        service.saveEmployee(employee1);
-        service.saveEmployee(employee2);
+        service.ins(employee1);
+        service.ins(employee2);
  
         /*
          * Get all employees list from database
          */
-        List<Employee> employees = service.findAllEmployees();
+        List<Employee> employees = service.selTodo();
         for (Employee emp : employees) {
             System.out.println(emp);
         }
@@ -67,12 +70,12 @@ public class AppMain {
  
         Employee employee = service.findBySsn("ssn00000001");
         employee.setSalary(new BigDecimal(50000));
-        service.updateEmployee(employee);
+        service.upd(employee);
  
         /*
          * Get all employees list from database
          */
-        List<Employee> employeeList = service.findAllEmployees();
+        List<Employee> employeeList = service.selTodo();
         for (Employee emp : employeeList) {
             System.out.println(emp);
         }

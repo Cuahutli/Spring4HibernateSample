@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scit.spring.dao;
+package com.scit.spring.dao.employee;
 
+import com.scit.spring.dao.GenericDAO;
 import java.util.List;
 import com.scit.spring.model.Employee;
 
@@ -12,10 +13,8 @@ import com.scit.spring.model.Employee;
  *
  * @author cuahutli
  */
-public interface EmployeeDao {
-    void saveEmployee(Employee employee);
-    List<Employee> findAllEmployees();
+public interface EmployeeDao extends GenericDAO<Employee, Integer> {
+    
     void deleteEmployeeBySsn(String ssn);
     Employee findBySsn(String ssn);
-    void updateEmployee(Employee employee);
 }

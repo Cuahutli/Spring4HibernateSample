@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scit.spring.service;
+package com.scit.spring.service.employee;
 
 import com.scit.spring.model.Employee;
-import java.util.List;
+import com.scit.spring.service.GenericService;
+
 
 /**
  *
  * @author cuahutli
  */
-public interface EmployeeService {
-   void saveEmployee(Employee employee);
-   List<Employee> findAllEmployees();
+public interface EmployeeService extends GenericService<Employee, Integer> {
    void deleteEmployeeBySsn(String ssn);
    Employee findBySsn(String ssn);
-   void updateEmployee(Employee employee);
 }
