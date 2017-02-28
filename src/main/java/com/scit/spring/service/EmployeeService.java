@@ -5,6 +5,9 @@
  */
 package com.scit.spring.service;
 
+import com.scit.spring.model.Employee;
+import java.util.List;
+
 /**
  *
  * @author cuahutli
