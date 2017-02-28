@@ -35,7 +35,7 @@ public class EmployeeDaoImpl extends AbstractDao implements EmployeeDao{
 
     @Override
     public void deleteEmployeeBySsn(String ssn) {
-        Query query = getSession().createSQLQuery("delete from Employe where ssn = :ssn");
+        Query query = getSession().createSQLQuery("delete from employee where ssn = :ssn");
         query.setString("ssn", ssn);
         query.executeUpdate();
     }
